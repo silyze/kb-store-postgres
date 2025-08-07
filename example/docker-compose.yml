@@ -1,0 +1,16 @@
+services:
+  database:
+    build:
+      context: ./sql
+    environment:
+      - POSTGRES_PASSWORD=local
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=db
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+volumes:
+  db-data:
+    driver: local
