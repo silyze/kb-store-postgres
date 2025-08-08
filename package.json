@@ -1,6 +1,6 @@
 {
   "name": "@silyze/kb-store-postgres",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Postgres implementation of VectorStore<TDocumentReference, TDocument> for @silyze/kb",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",

@@ -108,6 +108,22 @@ export default class PostgresVectorStore<
     this.#embeddingTable = config.embeddingTable ?? "embeddings";
   }
 
+  async getDocumentByReference(
+    reference: TPrimaryKey
+  ): Promise<TDocument | undefined> {
+    const stmt = SQL`SELECT * FROM `
+      .append(createIdentifier(this.#documentTable))
+      .append(SQL` WHERE "id" = ${reference}`);
+
+    const scopeFilter = this.#createScopeFilter(this.#documentScope);
+    if (scopeFilter.text.length > 0) {
+      stmt.append(SQL` AND `).append(scopeFilter);
+    }
+
+    const result = await this.#pool.query<TDocument>(stmt);
+    return result.rows[0];
+  }
+
   query(
     vector: Vector,
     documents?: TPrimaryKey[],
